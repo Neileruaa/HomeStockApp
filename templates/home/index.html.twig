@@ -5,4 +5,9 @@
 {% block body %}
     <h1>Homepage</h1>
     <a href="#" class="btn btn-primary">test</a>
+    <form action="{{ path('app_home_findbarcode') }}" method="post">
+        <input type="number" id="codebar" name="codebar" placeholder="Votre code bar">
+        <input type="submit" value="Valider" class="btn btn-success">
+    </form>
+    {% if codebar %} {{ codebar }} {% endif %}
 {% endblock %}
