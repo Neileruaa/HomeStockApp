@@ -24,7 +24,7 @@ class HomeController extends AbstractController
 	public function findBarCode(Request $request, BarcodeManager $barcodeManager) {
 		$codebar = $request->get('codebar');
 
-		$nameProduct = $barcodeManager->getNameOfProduct('GET', "https://product-open-data.com/gtin/".$codebar);
+		$nameProduct = $barcodeManager->getNameOfProduct('GET', $codebar);
 
 
 		return $this->render('home/index.html.twig', [

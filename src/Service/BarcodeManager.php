@@ -16,8 +16,8 @@ class BarcodeManager {
 	}
 
 
-	public function getNameOfProduct(string $type, string $url) {
-		$crawler = new Crawler($this->makeHTTPRequest($type, $url));
+	public function getNameOfProduct(string $type, $barcode) {
+		$crawler = new Crawler($this->makeHTTPRequest($type, "https://product-open-data.com/gtin/".$barcode));
 		$crawler = $crawler->filter('body');
 		$crawler = $crawler->filter('td')->each(function (Crawler $node, $i){
 			if ($i == 1){
