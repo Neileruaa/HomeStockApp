@@ -24,12 +24,14 @@ class HomeController extends AbstractController
 	public function findBarCode(Request $request, BarcodeManager $barcodeManager) {
 		$codebar = $request->get('codebar');
 
-		$nameProduct = $barcodeManager->getNameOfProduct('GET', $codebar);
+		$nameProduct = $barcodeManager->getNameOfProduct($codebar);
 
+		$image = $barcodeManager->getImageOfProduct($codebar);
 
 		return $this->render('home/index.html.twig', [
 			'codebar' => $codebar,
-			'nameProduct' => $nameProduct
+			'nameProduct' => $nameProduct,
+			'pathImage' => $image
 		]);
 		}
 
