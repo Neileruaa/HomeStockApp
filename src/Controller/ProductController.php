@@ -12,7 +12,7 @@ class ProductController extends AbstractController
      */
     public function scanner()
     {
-        return $this->render('product/index.html.twig', [
+        return $this->render('product/scanner.html.twig', [
         ]);
     }
 }

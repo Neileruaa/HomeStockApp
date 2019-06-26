@@ -15,9 +15,6 @@ class HomeController extends AbstractController
     public function index()
     {
         return $this->render('home/index.html.twig', [
-            'codebar' => null,
-            'nameProduct' => null,
-            'pathImage' => null
         ]);
     }
 
@@ -31,7 +28,7 @@ class HomeController extends AbstractController
 
 		$image = $barcodeManager->getImageOfProduct($codebar);
 
-		return $this->render('home/index.html.twig', [
+		return $this->render('product/show_result.html.twig', [
 			'codebar' => $codebar,
 			'nameProduct' => $nameProduct,
 			'pathImage' => $image

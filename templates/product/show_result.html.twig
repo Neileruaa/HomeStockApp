@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Resultat{% endblock %}
+
+{% block body %}
+    <h1>Résultat</h1>
+    <form action="{{ path('app_home_findbarcode') }}" method="post">
+        <input type="number" id="codebar" name="codebar" placeholder="Votre code bar" value="{{ codebar }}">
+        <input type="submit" value="Chercher" class="btn btn-success">
+    </form>
+    {% if nameProduct %} {{ nameProduct }} {% endif %}
+    {% if pathImage %} <img src="{{ pathImage }}" alt="">{% endif %}
+    <a href="{{ path('app_product_scanner') }}" class="btn btn-danger">Scanner à nouveau </a>
+    <a href="{{ path('app_home_index') }}" class="btn btn-success">Valider</a>
+{% endblock %}

@@ -4,12 +4,5 @@
 
 {% block body %}
     <h1>Homepage</h1>
-    <a href="#" class="btn btn-primary">test</a>
-    <form action="{{ path('app_home_findbarcode') }}" method="post">
-        <input type="number" id="codebar" name="codebar" placeholder="Votre code bar">
-        <input type="submit" value="Valider" class="btn btn-success">
-    </form>
-    {% if codebar %} {{ codebar }} {% endif %}
-    {% if nameProduct %} {{ nameProduct }} {% endif %}
-    {% if pathImage %} <img src="{{ pathImage }}" alt="">{% endif %}
+    <a href="{{ path('app_product_scanner') }}">Scanner un produit</a>
 {% endblock %}
