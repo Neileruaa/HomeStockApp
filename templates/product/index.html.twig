@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Scanner{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('scanner') }}
+{% endblock %}
+
+{% block body %}
+<div>
+    <h1>scanner</h1>
+    <div id="camera"></div>
+    <form id="formBarcode" method="post" action="{{ path('app_home_findbarcode') }}">
+        <input id="codebar" name="codebar" type="hidden">
+    </form>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('scanner') }}
+{% endblock %}
