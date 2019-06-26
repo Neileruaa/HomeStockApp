@@ -27,7 +27,7 @@ class BarcodeManager {
         if ($product = $this->getProductFromBarcode($barcode)){
             return $product['product_name'];
         } else {
-            $this->crawlNameOfProduct($barcode);
+            return $this->crawlNameOfProduct($barcode);
         }
     }
 
@@ -45,14 +45,15 @@ class BarcodeManager {
         return array_filter($crawler)[1];
     }
 
-    //Crawl html Bad way
-    public function getImageOfProduct($barcode) {
-		$crawler = new Crawler($this->makeHTTPRequest('GET', "https://product-open-data.com/gtin/".$barcode));
-		$crawler = $crawler->filter('body');
-		$crawler = $crawler->filter('img');
 
-		return $crawler->getNode(0)->getAttribute('src');
-	}
+    public function getImageOfProduct($barcode): ?string
+    {
+        if ($product = $this->getProductFromBarcode($barcode)){
+            return $product['selected_images']['front']['display']['fr'];
+        } else {
+            return $this->crawlImageFromBarcode($barcode);
+        }
+    }
 
     //openFoodFact
     public function getProductFromBarcode($barcode): ?array
@@ -63,5 +64,17 @@ class BarcodeManager {
             return  $jsonToArray['product'];
         }
         return null;
+    }
+
+    /**
+     Crawl html Bad way
+     */
+    public function crawlImageFromBarcode($barcode)
+    {
+        $crawler = new Crawler($this->makeHTTPRequest('GET', "https://product-open-data.com/gtin/" . $barcode));
+        $crawler = $crawler->filter('body');
+        $crawler = $crawler->filter('img');
+
+        return $crawler->getNode(0)->getAttribute('src');
     }
 }
