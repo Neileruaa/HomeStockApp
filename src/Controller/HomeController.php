@@ -15,6 +15,9 @@ class HomeController extends AbstractController
     public function index()
     {
         return $this->render('home/index.html.twig', [
+            'codebar' => null,
+            'nameProduct' => null,
+            'pathImage' => null
         ]);
     }
 
