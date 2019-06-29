@@ -24,6 +24,7 @@ final class Version20190629193008 extends AbstractMigration
 
         $this->addSql('ALTER TABLE user ADD roles JSON NOT NULL, ADD address VARCHAR(255) NOT NULL, ADD cp VARCHAR(255) NOT NULL, DROP adresse, DROP code_postal, CHANGE email email VARCHAR(180) NOT NULL');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_8D93D649E7927C74 ON user (email)');
+	    $this->addSql('ALTER TABLE user ADD pays VARCHAR(255) NOT NULL');
     }
 
     public function down(Schema $schema) : void
@@ -33,5 +34,6 @@ final class Version20190629193008 extends AbstractMigration
 
         $this->addSql('DROP INDEX UNIQ_8D93D649E7927C74 ON user');
         $this->addSql('ALTER TABLE user ADD adresse VARCHAR(255) NOT NULL COLLATE utf8mb4_unicode_ci, ADD code_postal VARCHAR(255) NOT NULL COLLATE utf8mb4_unicode_ci, DROP roles, DROP address, DROP cp, CHANGE email email VARCHAR(255) NOT NULL COLLATE utf8mb4_unicode_ci');
+	    $this->addSql('ALTER TABLE user DROP pays');
     }
 }
