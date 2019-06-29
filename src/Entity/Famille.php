@@ -58,6 +58,11 @@ class Famille
      */
     private $produitFamilles;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $pays;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -239,6 +244,18 @@ class Famille
                 $produitFamille->setFamille(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPays(): ?string
+    {
+        return $this->pays;
+    }
+
+    public function setPays(string $pays): self
+    {
+        $this->pays = $pays;
 
         return $this;
     }

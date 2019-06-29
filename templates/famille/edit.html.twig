@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Famille{% endblock %}
+
+{% block body %}
+    <h1>Editer votre Famille</h1>
+
+    {{ include('famille/_form.html.twig', {'button_label': 'Update'}) }}
+{% endblock %}

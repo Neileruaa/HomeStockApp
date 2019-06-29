@@ -1,0 +1,8 @@
+{{ form_start(form) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.adresse) }}
+    {{ form_row(form.codePostal) }}
+    {{ form_row(form.ville) }}
+    {{ form_row(form.pays) }}
+    <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
