@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Produit;
 use App\Entity\ProduitFamille;
 use App\Form\ProductType;
+use App\Repository\ProduitRepository;
 use App\Service\BarcodeManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,9 +27,14 @@ class HomeController extends AbstractController
 	 * @Route("/barcode")
 	 * @IsGranted("ROLE_USER")
 	 */
-	public function findBarCode(Request $request, BarcodeManager $barcodeManager) {
+	public function findBarCode(Request $request, BarcodeManager $barcodeManager, ProduitRepository $produitRepository) {
 		$codebar = $request->get('codebar');
 
+		$needToSetQuantity = false;
+
+		if ($produit = $produitRepository->findOneBy(['ean' => $codebar])){
+			$needToSetQuantity = true;
+		}
 		$nameProduct = $barcodeManager->getNameOfProduct($codebar);
 		$image = $barcodeManager->getImageOfProduct($codebar);
 
@@ -53,14 +59,20 @@ class HomeController extends AbstractController
 	        $entityManager->persist($produitFamille);
 	        $entityManager->flush();
 
-	        return $this->redirectToRoute('app_famille_show');
+	        return $this->render('product/show_result.html.twig', [
+		        'codebar' => $codebar,
+		        'nameProduct' => $nameProduct,
+		        'pathImage' => $image,
+		        'form' => $productForm->createView(),
+		        'needToSetQuantity' => true
+	        ]);
         }
-
 		return $this->render('product/show_result.html.twig', [
 			'codebar' => $codebar,
 			'nameProduct' => $nameProduct,
 			'pathImage' => $image,
-	        'form' => $productForm->createView()
+	        'form' => $productForm->createView(),
+			'needToSetQuantity' => $needToSetQuantity
 		]);
 	}
 }

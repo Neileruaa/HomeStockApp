@@ -4,7 +4,22 @@
 
 {% block body %}
 	<h1>Vos produits en stock</h1>
-	{% for produitFamille in produitFamilles %}
-		{{ produitFamille.produit.name }}<br>
-	{% endfor %}
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">EAN</th>
+				<th scope="col">Nom</th>
+				<th scope="col">Quantite</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for produitFamille in produitFamilles %}
+				<tr>
+					<th scope="row">{{ produitFamille.produit.ean }}</th>
+					<td>{{ produitFamille.produit.name }}</td>
+					<td>{{ produitFamille.quantite }}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 {% endblock %}

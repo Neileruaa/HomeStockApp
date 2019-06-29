@@ -35,7 +35,7 @@
                 </h5>
             </div>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                <div class="card-body">
+                <div id="formAddProduct" class="card-body">
                     {{ form_start(form) }}
                         {{ form_row(form.name) }}
                         {{ form_row(form.pays) }}
@@ -47,4 +47,24 @@
             </div>
         </div>
     </div>
+
+    <div id="toJs" data-show-result="{{ needToSetQuantity ? true : false }}"></div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        var toJs = document.getElementById('toJs');
+        var needToShowResult = Boolean(toJs.dataset.showResult);
+        console.log(needToShowResult);
+        if (needToShowResult === true){
+            var divForm = document.getElementById('formAddProduct');
+            var card = document.getElementById('collapseTwo');
+            var modalQuantity = "<form action='{{ path('app_product_setquantity') }}' method='post'><label for='quantityProduct'>Quantité</label><input id='quantityProduct' name='quantityProduct' type='number' min='0' value='1' autofocus><input type='hidden' name='hiddenCodeBar' value='{{ codebar }}'> <input type='submit' class='btn btn-success'></form>";
+
+            card.classList.add('show');
+            divForm.classList.remove('collapsed');
+            divForm.innerHTML = modalQuantity;
+        }
+    </script>
 {% endblock %}

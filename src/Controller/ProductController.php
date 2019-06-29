@@ -9,6 +9,9 @@ use App\Form\FamilleType;
 use App\Form\ProductType;
 use App\Repository\FamilleRepository;
 use App\Repository\ProduitFamilleRepository;
+use App\Repository\ProduitRepository;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,4 +42,18 @@ class ProductController extends AbstractController
 			'produitFamilles' => $produitFamilles
 		]);
     }
+
+	/**
+	 * @Route("/setQuantity")
+	 */
+	public function setQuantity(Request $request, ProduitFamilleRepository $produitFamilleRepository, ProduitRepository $produitRepository, EntityManagerInterface $em) {
+		$codebar = $request->get('hiddenCodeBar');
+		$produit = $produitRepository->findOneBy(['ean' => $codebar]);
+		$quantity = $request->get('quantityProduct');
+		$productFamille = $produitFamilleRepository->findOneBy(['famille'=>$this->getUser()->getFamille(), 'produit'=> $produit]);
+		$productFamille->setQuantite($quantity);
+		$em->persist($productFamille);
+		$em->flush();
+		return $this->redirectToRoute('app_product_productsoffamille');
+	}
 }
