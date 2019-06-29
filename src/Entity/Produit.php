@@ -40,26 +40,31 @@ class Produit
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Categorie", inversedBy="produits")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $categories;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Marque", inversedBy="produits")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $marque;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\LieuStockage", inversedBy="produits")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $lieuStockage;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\ProduitListeCourse", mappedBy="produit")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $produitListeCourses;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\ProduitFamille", mappedBy="produit")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $produitFamilles;
 

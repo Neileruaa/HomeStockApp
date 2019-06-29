@@ -5,7 +5,7 @@
 {% block body %}
     <h1>Homepage</h1>
     <a href="{{ path('app_product_scanner') }}" class="btn btn-primary">Scanner un produit</a>
-    <form action="{{ path('app_home_findbarcode') }}" method="post">
+    <form action="{{ path('app_home_findbarcode') }}" method="get">
         <input type="text" id="codebar" name="codebar" placeholder="Votre code bar" required>
         <input type="submit" value="Chercher" class="btn btn-success">
     </form>

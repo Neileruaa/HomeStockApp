@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vos produits{% endblock %}
+
+{% block body %}
+	<h1>Vos produits en stock</h1>
+	{% for produitFamille in produitFamilles %}
+		{{ produitFamille.produit.name }}<br>
+	{% endfor %}
+{% endblock %}

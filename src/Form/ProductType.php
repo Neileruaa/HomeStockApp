@@ -16,9 +16,6 @@ class ProductType extends AbstractType
             ->add('image')
             ->add('ean')
             ->add('pays')
-            ->add('categories')
-            ->add('marque')
-            ->add('lieuStockage')
         ;
     }
 
