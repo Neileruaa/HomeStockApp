@@ -71,6 +71,8 @@ class User implements UserInterface
 	 */
     public $confirmPassword;
 
+    public $termsAccepted;
+
     /**
      * @ORM\Column(type="string", length=255)
      */
