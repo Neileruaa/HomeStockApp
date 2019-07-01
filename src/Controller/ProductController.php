@@ -2,21 +2,12 @@
 
 namespace App\Controller;
 
-use App\Entity\Famille;
-use App\Entity\Produit;
-use App\Entity\ProduitFamille;
-use App\Form\FamilleType;
-use App\Form\ProductType;
-use App\Repository\FamilleRepository;
 use App\Repository\ProduitFamilleRepository;
 use App\Repository\ProduitRepository;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
-use mysql_xdevapi\Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -30,33 +21,51 @@ class ProductController extends AbstractController
      */
     public function scanner()
     {
-        return $this->render('product/scanner.html.twig', [
+        return $this->render('product/scanner.html.twig', []);
+    }
+
+    /**
+     * @Route("/show")
+     */
+    public function productsOfFamille(ProduitFamilleRepository $produitFamilleRepository)
+    {
+        $produitFamilles = $produitFamilleRepository->findBy(['famille' => $this->getUser()->getFamille()]);
+
+        return $this->render('product/show_all.html.twig', [
+            'produitFamilles' => $produitFamilles,
         ]);
     }
 
-	/**
-	 * @Route("/show")
-	 */
-	public function productsOfFamille(ProduitFamilleRepository $produitFamilleRepository) {
-		$produitFamilles = $produitFamilleRepository->findBy(['famille' => $this->getUser()->getFamille()]);
-		return $this->render('product/show_all.html.twig', [
-			'produitFamilles' => $produitFamilles
-		]);
+    /**
+     * @Route("/setQuantity")
+     * @throws \Exception
+     */
+    public function setQuantity(
+        Request $request,
+        ProduitFamilleRepository $produitFamilleRepository,
+        ProduitRepository $produitRepository,
+        EntityManagerInterface $em
+    ) {
+        $codebar = $request->get('hiddenCodeBar');
+        $produit = $produitRepository->findOneBy(['ean' => $codebar]);
+        $quantity = $request->get('quantityProduct');
+        $productFamille = $produitFamilleRepository->findOneBy([
+            'famille' => $this->getUser()->getFamille(),
+            'produit' => $produit,
+        ]);
+        //TODO: valider param(input number)
+        $productFamille->setQuantiteByType($quantity, $request->get('quantityRadio'));
+        $em->persist($productFamille);
+        $em->flush();
+
+        return $this->redirectToRoute('app_product_productsoffamille');
     }
 
-	/**
-	 * @Route("/setQuantity")
-	 * @throws \Exception
-	 */
-	public function setQuantity(Request $request, ProduitFamilleRepository $produitFamilleRepository, ProduitRepository $produitRepository, EntityManagerInterface $em) {
-		$codebar = $request->get('hiddenCodeBar');
-		$produit = $produitRepository->findOneBy(['ean' => $codebar]);
-		$quantity = $request->get('quantityProduct');
-		$productFamille = $produitFamilleRepository->findOneBy(['famille'=>$this->getUser()->getFamille(), 'produit'=> $produit]);
-		//TODO: valider param(input number)
-		$productFamille->setQuantiteByType($quantity, $request->get('quantityRadio'));
-		$em->persist($productFamille);
-		$em->flush();
-		return $this->redirectToRoute('app_product_productsoffamille');
-	}
+    /**
+     * Imbriqué
+     */
+    public function searchBarByEan()
+    {
+
+    }
 }
