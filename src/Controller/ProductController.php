@@ -51,7 +51,15 @@ class ProductController extends AbstractController
 		$produit = $produitRepository->findOneBy(['ean' => $codebar]);
 		$quantity = $request->get('quantityProduct');
 		$productFamille = $produitFamilleRepository->findOneBy(['famille'=>$this->getUser()->getFamille(), 'produit'=> $produit]);
-		$productFamille->setQuantite($quantity);
+		//TODO: valider param(input number)
+		switch ($request->get('quantityRadio')){
+			case 'addToStock':
+				$productFamille->setQuantite($productFamille->getQuantite() + $quantity);
+				break;
+			case "overwriteQuantity":
+				$productFamille->setQuantite($quantity);
+				break;
+		}
 		$em->persist($productFamille);
 		$em->flush();
 		return $this->redirectToRoute('app_product_productsoffamille');
