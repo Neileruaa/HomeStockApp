@@ -60,7 +60,7 @@
         if (needToShowResult === true){
             var divForm = document.getElementById('formAddProduct');
             var card = document.getElementById('collapseTwo');
-            var modalQuantity = "<form action='{{ path('app_product_setquantity') }}' method='post'><label for='quantityProduct'>Quantité</label><input id='quantityProduct' name='quantityProduct' type='number' min='0' value='1' autofocus><input type='hidden' name='hiddenCodeBar' value='{{ codebar }}'><div class=\"form-check form-check-inline m-1\">\n" +
+            var modalQuantity = "<form action='{{ path('app_product_setquantity') }}' method='post'><label for='quantityProduct'>Quantité</label><input id='quantityProduct' name='quantityProduct' type='number' min='0' value='1' autofocus required><input type='hidden' name='hiddenCodeBar' value='{{ codebar }}'><div class=\"form-check form-check-inline m-1\">\n" +
                     "  <input class=\"form-check-input\" type=\"radio\" name=\"quantityRadio\" id=\"addToStockRadio\" value=\"addToStock\" checked>\n" +
                     "  <label class=\"form-check-label\" for=\"addToStockRadio\">\n" +
                     "    Ajouter aux stocks\n" +
