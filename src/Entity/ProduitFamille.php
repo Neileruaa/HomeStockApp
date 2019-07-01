@@ -31,6 +31,25 @@ class ProduitFamille
      */
     private $quantite;
 
+	public function setQuantiteByType(int $quantity, string $type): self
+	{
+		switch ($type){
+			case 'addToStock':
+				$this->setQuantite($this->getQuantite() + $quantity);
+				break;
+			case "overwriteQuantity":
+				$this->setQuantite($quantity);
+				break;
+			case "removeQuantity":
+				$this->setQuantite($this->getQuantite() - $quantity);
+				break;
+			default:
+				throw new \Exception("Error radio not found to set quantity by this way");
+				break;
+		}
+		return $this;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

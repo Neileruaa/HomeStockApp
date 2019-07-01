@@ -12,6 +12,7 @@ use App\Repository\ProduitFamilleRepository;
 use App\Repository\ProduitRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use mysql_xdevapi\Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -45,6 +46,7 @@ class ProductController extends AbstractController
 
 	/**
 	 * @Route("/setQuantity")
+	 * @throws \Exception
 	 */
 	public function setQuantity(Request $request, ProduitFamilleRepository $produitFamilleRepository, ProduitRepository $produitRepository, EntityManagerInterface $em) {
 		$codebar = $request->get('hiddenCodeBar');
@@ -52,14 +54,7 @@ class ProductController extends AbstractController
 		$quantity = $request->get('quantityProduct');
 		$productFamille = $produitFamilleRepository->findOneBy(['famille'=>$this->getUser()->getFamille(), 'produit'=> $produit]);
 		//TODO: valider param(input number)
-		switch ($request->get('quantityRadio')){
-			case 'addToStock':
-				$productFamille->setQuantite($productFamille->getQuantite() + $quantity);
-				break;
-			case "overwriteQuantity":
-				$productFamille->setQuantite($quantity);
-				break;
-		}
+		$productFamille->setQuantiteByType($quantity, $request->get('quantityRadio'));
 		$em->persist($productFamille);
 		$em->flush();
 		return $this->redirectToRoute('app_product_productsoffamille');
