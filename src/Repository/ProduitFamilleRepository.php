@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Famille;
 use App\Entity\ProduitFamille;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -19,32 +20,16 @@ class ProduitFamilleRepository extends ServiceEntityRepository
         parent::__construct($registry, ProduitFamille::class);
     }
 
-    // /**
-    //  * @return ProduitFamille[] Returns an array of ProduitFamille objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findByEanAndFamille(string $barcode, Famille $famille)
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
+        return $this->createQueryBuilder('pF')
+            ->innerJoin('pF.produit', 'p')
+            ->andWhere('p.ean = :barcode')
+            ->setParameter('barcode', $barcode)
+            ->andWhere('pF.famille = :famille')
+            ->setParameter('famille', $famille)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?ProduitFamille
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

@@ -4,6 +4,7 @@
 
 {% block body %}
 	<h1>Vos produits en stock</h1>
+	{{ render(controller('App\\Controller\\ProductController::searchBarByEan')) }}
 	<table class="table">
 		<thead>
 			<tr>
