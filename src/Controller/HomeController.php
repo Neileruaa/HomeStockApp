@@ -50,7 +50,7 @@ class HomeController extends AbstractController
 	        $produitFamille = new ProduitFamille();
 	        $produitFamille->setFamille($this->getUser()->getFamille());
 	        $produitFamille->setProduit($product);
-	        $produitFamille->setQuantite(1);
+	        $produitFamille->setQuantite(0);
 
 	        $product->addProduitFamille($produitFamille);
 
