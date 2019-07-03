@@ -17,6 +17,7 @@
 				<th scope="col">EAN</th>
 				<th scope="col">Nom</th>
 				<th scope="col">Quantite</th>
+				<th scope="col">Actions</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -25,6 +26,10 @@
 					<th scope="row">{{ produitFamille.produit.ean }}</th>
 					<td>{{ produitFamille.produit.name }}</td>
 					<td>{{ produitFamille.quantite }}</td>
+					<td>
+						<a href="{{ path('app_product_incquantity', {'id': produitFamille.id}) }}" class="text-success" ><i class="fas fa-plus-square fa-lg"></i></a>
+						<a href="{{ path('app_product_decquantity', {'id': produitFamille.id}) }}" class="text-danger"><i class="fas fa-minus-square fa-lg"></i></a>
+					</td>
 				</tr>
 			{% endfor %}
 		</tbody>

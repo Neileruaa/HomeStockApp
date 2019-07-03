@@ -6,6 +6,7 @@ use App\Entity\Famille;
 use App\Entity\ProduitFamille;
 use App\Repository\ProduitFamilleRepository;
 use App\Repository\ProduitRepository;
+use App\Service\ProductManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -112,6 +113,7 @@ class ProductController extends AbstractController
     }
 
     /**
+     * AJAX
      * @Route("/all/json")
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -127,5 +129,29 @@ class ProductController extends AbstractController
             ];
         }
         return $this->json($produit);
+    }
+
+    /**
+     * @Route("/quantity/inc/{id}")
+     * @param Request $request
+     * @param ProductManager $productManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function incQuantity(ProductManager $productManager, ProduitFamille $produitFamille, Request $request)
+    {
+        $productManager->incQuantity($produitFamille);
+        return $this->redirect($request->headers->get('referer'));
+    }
+
+    /**
+     * @Route("/quantity/dec/{id}")
+     * @param Request $request
+     * @param ProductManager $productManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function decQuantity(ProductManager $productManager, ProduitFamille $produitFamille, Request $request)
+    {
+        $productManager->decQuantity($produitFamille);
+        return $this->redirect($request->headers->get('referer'));
     }
 }
