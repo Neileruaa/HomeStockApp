@@ -19,6 +19,7 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "jquery-ui": "^1.12.1",
         "quagga": "^0.12.1"
     }
 }

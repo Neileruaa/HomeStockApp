@@ -19,17 +19,17 @@ class ProduitFamilleRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, ProduitFamille::class);
     }
-
-    public function findByEanAndFamille(string $barcode, Famille $famille)
+    
+    public function findBySearchBarAndFamille(string $info, Famille $famille)
     {
         return $this->createQueryBuilder('pF')
             ->innerJoin('pF.produit', 'p')
-            ->andWhere('p.ean = :barcode')
-            ->setParameter('barcode', $barcode)
+            ->andWhere("p.name LIKE :name OR p.ean LIKE :name")
+            ->setParameter('name', '%'.$info.'%')
             ->andWhere('pF.famille = :famille')
             ->setParameter('famille', $famille)
             ->getQuery()
             ->getResult()
-        ;
+            ;
     }
 }

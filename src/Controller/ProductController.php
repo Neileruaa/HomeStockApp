@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Famille;
+use App\Entity\ProduitFamille;
 use App\Repository\ProduitFamilleRepository;
 use App\Repository\ProduitRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -67,10 +69,10 @@ class ProductController extends AbstractController
      * Imbriqué
      * @Route()
      */
-    public function searchBarByEan(Request $request, ProduitFamilleRepository $produitFamilleRepository)
+    public function searchBar(Request $request, ProduitFamilleRepository $produitFamilleRepository)
     {
         $form = $this->createFormBuilder(null)
-            ->add('ean', TextType::class)
+            ->add('info', TextType::class)
             ->add(
                 'search',
                 SubmitType::class,
@@ -85,13 +87,13 @@ class ProductController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
-            $ean = $form->get('ean')->getData();
-            $produitFamilles = $produitFamilleRepository->findByEanAndFamille($ean, $this->getUser()->getFamille());
+            $info = $form->get('info')->getData();
+            $produitFamilles = $produitFamilleRepository->findBySearchBarAndFamille($info, $this->getUser()->getFamille());
             return $this->showProducts($produitFamilles);
         }
-
-        return $this->render('product/search/_search_by_ean.html.twig', [
-            'form' => $form->createView()
+        return $this->render(
+            'product/search/_search_by.html.twig', [
+            'formSearch' => $form->createView(),
         ]);
     }
 
@@ -107,5 +109,23 @@ class ProductController extends AbstractController
                 'produitFamilles' => $produitFamilles,
             ]
         );
+    }
+
+    /**
+     * @Route("/all/json")
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function getAllNameJson(ProduitFamilleRepository $produitFamilleRepository, Request $request)
+    {
+        $produitFams = $produitFamilleRepository->findBySearchBarAndFamille($request->get('name'), $this->getUser()->getFamille());
+        $produit = [];
+        /** @var ProduitFamille $produitFamille */
+        foreach ($produitFams as $produitFamille){
+            $produit[] = [
+                'label' => ''.$produitFamille->getProduit()->getName().', '. $produitFamille->getProduit()->getEan(),
+                'value' => $produitFamille->getProduit()->getEan(),
+            ];
+        }
+        return $this->json($produit);
     }
 }

@@ -1,0 +1,8 @@
+{{ form_start(formSearch, {'attr': {'action': path('app_product_searchbar')}}) }}
+	<div class="input-group mb-3">
+		{{ form_widget(formSearch.info, { 'attr': {'placeholder': 'EAN ou nom du produit'} }) }}
+		<div class="input-group-append">
+			{{ form_row(formSearch.search) }}
+		</div>
+	</div>
+{{ form_end(formSearch) }}
