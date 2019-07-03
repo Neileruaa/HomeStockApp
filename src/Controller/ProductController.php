@@ -76,7 +76,7 @@ class ProductController extends AbstractController
                 SubmitType::class,
                 [
                     'attr' => [
-                        'class' => 'btn btn-primary',
+                        'class' => 'btn-primary',
                     ],
                 ]
             )

@@ -1,3 +1,8 @@
 {{ form_start(form, {'attr': {'action': path('app_product_searchbarbyean')}}) }}
-{{ form_widget(form) }}
+	<div class="input-group mb-3">
+		{{ form_widget(form.ean, { 'attr': {'placeholder': 'EAN'} }) }}
+		<div class="input-group-append">
+			{{ form_row(form.search) }}
+		</div>
+	</div>
 {{ form_end(form) }}
