@@ -52,12 +52,11 @@ class ProductController extends AbstractController
         $codebar = $request->get('hiddenCodeBar');
         $produit = $produitRepository->findOneBy(['ean' => $codebar]);
         $quantity = $request->get('quantityProduct');
-        $productFamille = $produitFamilleRepository->findOneBy(
-            [
-                'famille' => $this->getUser()->getFamille(),
-                'produit' => $produit,
-            ]
-        );
+        if (!($productFamille = $produitFamilleRepository->findOneBy(['famille' => $this->getUser()->getFamille(), 'produit' => $produit]))){
+            $productFamille = new ProduitFamille();
+            $productFamille->setProduit($produit)
+                ->setFamille($this->getUser()->getFamille());
+        }
         //TODO: valider param(input number)
         $productFamille->setQuantiteByType($quantity, $request->get('quantityRadio'));
         $em->persist($productFamille);
