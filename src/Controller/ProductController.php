@@ -154,4 +154,16 @@ class ProductController extends AbstractController
         $productManager->decQuantity($produitFamille);
         return $this->redirect($request->headers->get('referer'));
     }
+
+    /**
+     * @Route("/remove/{id}")
+     * @param Request $request
+     * @param ProductManager $productManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function removeProduit(ProductManager $productManager, ProduitFamille $produitFamille, Request $request)
+    {
+        $productManager->removeProduit($produitFamille);
+        return $this->redirect($request->headers->get('referer'));
+    }
 }

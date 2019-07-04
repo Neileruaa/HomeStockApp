@@ -36,4 +36,11 @@ class ProductManager {
         $this->em->persist($produitFamille);
         $this->em->flush();
     }
+
+    public function removeProduit(ProduitFamille $produitFamille): void
+    {
+//        $this->em->remove($produitFamille->getProduit());
+        $this->em->remove($produitFamille);
+        $this->em->flush();
+    }
 }

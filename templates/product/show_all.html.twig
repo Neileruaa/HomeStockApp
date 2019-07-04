@@ -29,6 +29,7 @@
 					<td>
 						<a href="{{ path('app_product_incquantity', {'id': produitFamille.id}) }}" class="text-success" ><i class="fas fa-plus-square fa-lg"></i></a>
 						<a href="{{ path('app_product_decquantity', {'id': produitFamille.id}) }}" class="text-danger"><i class="fas fa-minus-square fa-lg"></i></a>
+						<a href="{{ path('app_product_removeproduit', {'id': produitFamille.id}) }}" class="text-danger"><i class="fas fa-trash fa-lg"></i></a>
 					</td>
 				</tr>
 			{% endfor %}
