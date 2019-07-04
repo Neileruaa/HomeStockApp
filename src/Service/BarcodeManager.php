@@ -55,6 +55,15 @@ class BarcodeManager {
         }
     }
 
+    public function getCountryOfProduct($barcode): ?string
+    {
+        if ($product = $this->getProductFromBarcode($barcode)){
+            return strtoupper(substr($product['countries'], 0, 2 ));
+        } else {
+            dd("pas de country sur openfoodfact");
+        }
+    }
+
     //openFoodFact
     public function getProductFromBarcode($barcode): ?array
     {

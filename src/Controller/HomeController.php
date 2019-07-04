@@ -37,10 +37,12 @@ class HomeController extends AbstractController
 		}
 		$nameProduct = $barcodeManager->getNameOfProduct($codebar);
 		$image = $barcodeManager->getImageOfProduct($codebar);
+        $pays = $barcodeManager->getCountryOfProduct($codebar);
 
 		$product = new Produit();
 		$product->setName($nameProduct);
 		$product->setEan($codebar);
+		$product->setPays($pays);
 
 		$productForm = $this->createForm(ProductType::class, $product);
 
