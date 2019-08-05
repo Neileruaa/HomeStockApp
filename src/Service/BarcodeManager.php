@@ -49,7 +49,7 @@ class BarcodeManager {
     public function getImageOfProduct($barcode): ?string
     {
         if ($product = $this->getProductFromBarcode($barcode)){
-            return $product['selected_images']['front']['display']['fr'];
+            return $product['selected_images']['front']['display']['fr'] ?? 'https://via.placeholder.com/150';
         } else {
             return $this->crawlImageFromBarcode($barcode);
         }
