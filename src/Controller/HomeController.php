@@ -28,7 +28,7 @@ class HomeController extends AbstractController
 	 * @IsGranted("ROLE_USER")
 	 */
 	public function findBarCode(Request $request, BarcodeManager $barcodeManager, ProduitRepository $produitRepository) {
-		$codebar = $request->get('codebar');
+		$codebar = $request->get('codebar') ?? $request->request->get('product')['ean'];
 
 		$needToSetQuantity = false;
 
