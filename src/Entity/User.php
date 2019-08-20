@@ -95,6 +95,11 @@ class User implements UserInterface
         return $this;
     }
 
+    public function getRealUserName(): string
+    {
+        return (string) $this->username;
+    }
+
     /**
      * A visual identifier that represents this user.
      *
