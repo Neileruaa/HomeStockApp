@@ -8,7 +8,7 @@
     {% if is_granted('headFamily', famille) %}
         <div class="row m-3">
             <div class="col-4 text-center">
-                <a href="#" class="btn btn-danger"><i class="fas fa-eraser"></i></a>
+                <a href="{{ path('app_famille_delete', {'id': famille.id}) }}" class="btn btn-danger"><i class="fas fa-eraser"></i></a>
             </div>
             <div class="col-4 text-center">
                 <a href="#" class="btn btn-success"><i class="fas fa-user-plus"></i></a>

@@ -5,7 +5,10 @@ namespace App\Controller;
 use App\Entity\Famille;
 use App\Form\FamilleType;
 use App\Repository\FamilleRepository;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -72,10 +75,11 @@ class FamilleController extends AbstractController
 
     /**
      * @Route("/{id}/edit", methods={"GET","POST"})
+     * @Security("is_granted('headFamily', famille)")
      */
     public function edit(Request $request, Famille $famille): Response
     {
-        $this->denyAccessUnlessGranted('headFamily', $famille);
+//        $this->denyAccessUnlessGranted('headFamily', $famille);
 
         $form = $this->createForm(FamilleType::class, $famille);
         $form->handleRequest($request);
@@ -90,5 +94,19 @@ class FamilleController extends AbstractController
             'famille' => $famille,
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/{id}/remove")
+     * @Security("is_granted('headFamily', famille)")
+     */
+    public function delete(Famille $famille, EntityManagerInterface $em)
+    {
+        foreach ($famille->getUsers() as $user){
+            $user->setFamille(null);
+        }
+        $em->remove($famille);
+        $em->flush();
+        return $this->redirectToRoute('app_famille_show');
     }
 }
