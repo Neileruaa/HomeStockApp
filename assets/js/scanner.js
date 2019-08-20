@@ -11,6 +11,7 @@ Quagga.init({
     decoder : {
         readers: [
             "ean_reader",
+            "ean_8_reader"
         ],
         debug: {
             showCanvas: true,
