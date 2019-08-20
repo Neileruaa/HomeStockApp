@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Famille;
 use App\Entity\Invitation;
+use App\Repository\InvitationRepository;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -51,4 +53,42 @@ class InvitationController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    /**
+     * @Route("/show")
+     */
+    public function show(InvitationRepository $invitationRepository)
+    {
+        $invitations = $invitationRepository->findBy(['receiver' => $this->getUser(), 'active' => true]);
+
+        return $this->render('invitation/show.html.twig', [
+            'invitations' => $invitations
+        ]);
+    }
+
+    /**
+     * @Route("/accept/{id}")
+     */
+    public function accept(EntityManagerInterface $em, Invitation $invitation)
+    {
+        /** @var Famille $familleToJoin */
+        $familleToJoin = $invitation->getAuthor()->getOwnedFamille();
+        $familleToJoin->addUser($invitation->getReceiver());
+        $em->persist($familleToJoin);
+        $em->remove($invitation);
+        $em->flush();
+
+        return $this->redirectToRoute('app_famille_show');
+    }
+
+    /**
+     * @Route("/decline/{id}")
+     */
+    public function decline(EntityManagerInterface $em, Invitation $invitation)
+    {
+        $em->remove($invitation);
+        $em->flush();
+        return $this->redirectToRoute('app_invitation_show');
+    }
+
 }

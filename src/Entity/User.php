@@ -81,7 +81,7 @@ class User implements UserInterface
     private $pays;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Famille", mappedBy="headFamily")
+     * @ORM\OneToOne(targetEntity="App\Entity\Famille", mappedBy="headFamily")
      */
     private $ownedFamille;
 
