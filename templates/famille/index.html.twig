@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<h1>Liste des familles existantes</h1>
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">Name</th>
+				<th scope="col">Nb membres</th>
+				<th scope="col">Ville</th>
+				<th scope="col">Pays</th>
+				<th scope="col">Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for famille in familles %}
+				<tr {% if famille.id == app.user.famille.id %}class="table-active"{% endif %}>
+					<th scope="row">{{ famille.name }}</th>
+					<td>{{ famille.users|length }}</td>
+					<td>{{ famille.ville }}</td>
+					<td>{{ famille.pays }}</td>
+					<td></td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+{% endblock %}
+
+{% block title %}
+Famille
+{% endblock %}
+

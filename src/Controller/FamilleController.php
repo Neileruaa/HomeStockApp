@@ -17,6 +17,19 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class FamilleController extends AbstractController
 {
+
+    /**
+     * @Route("/", methods={"GET"})
+     */
+    public function index(FamilleRepository $familleRepository)
+    {
+        $familles = $familleRepository->findAll();
+        dump($familles);
+        return $this->render('famille/index.html.twig', [
+            'familles' => $familles
+        ]);
+    }
+
     /**
      * @Route("/new", methods={"GET","POST"})
      */
