@@ -64,7 +64,7 @@ class Famille
     private $pays;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="familles")
+     * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="famille")
      */
     private $headFamily;
 

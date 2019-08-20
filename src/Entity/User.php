@@ -83,12 +83,8 @@ class User implements UserInterface
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Famille", mappedBy="headFamily")
      */
-    private $familles;
+    private $ownedFamille;
 
-    public function __construct()
-    {
-        $this->familles = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -253,33 +249,19 @@ class User implements UserInterface
     }
 
     /**
-     * @return Collection|Famille[]
+     * @return mixed
      */
-    public function getFamilles(): Collection
+    public function getOwnedFamille()
     {
-        return $this->familles;
+        return $this->ownedFamille;
     }
 
-    public function addFamille(Famille $famille): self
+    /**
+     * @param mixed $ownedFamille
+     */
+    public function setOwnedFamille($ownedFamille): void
     {
-        if (!$this->familles->contains($famille)) {
-            $this->familles[] = $famille;
-            $famille->setHeadFamily($this);
-        }
-
-        return $this;
+        $this->ownedFamille = $ownedFamille;
     }
 
-    public function removeFamille(Famille $famille): self
-    {
-        if ($this->familles->contains($famille)) {
-            $this->familles->removeElement($famille);
-            // set the owning side to null (unless already changed)
-            if ($famille->getHeadFamily() === $this) {
-                $famille->setHeadFamily(null);
-            }
-        }
-
-        return $this;
-    }
 }
