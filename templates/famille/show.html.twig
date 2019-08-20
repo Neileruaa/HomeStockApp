@@ -5,17 +5,19 @@
 {% block body %}
     <h1>Famille</h1>
 
-    <div class="row m-3">
-        <div class="col-4 text-center">
-            <a href="#" class="btn btn-danger"><i class="fas fa-eraser"></i></a>
+    {% if is_granted('headFamily', famille) %}
+        <div class="row m-3">
+            <div class="col-4 text-center">
+                <a href="#" class="btn btn-danger"><i class="fas fa-eraser"></i></a>
+            </div>
+            <div class="col-4 text-center">
+                <a href="#" class="btn btn-success"><i class="fas fa-user-plus"></i></a>
+            </div>
+            <div class="col-4 text-center">
+                <a href="#" class="btn btn-warning"><i class="fas fa-tasks"></i></a>
+            </div>
         </div>
-        <div class="col-4 text-center">
-            <a href="#" class="btn btn-success"><i class="fas fa-user-plus"></i></a>
-        </div>
-        <div class="col-4 text-center">
-            <a href="#" class="btn btn-warning"><i class="fas fa-tasks"></i></a>
-        </div>
-    </div>
+    {% endif %}
 
     <table class="table">
         <tbody>
@@ -49,6 +51,7 @@
             </tr>
         </tbody>
     </table>
-
-    <a href="{{ path('app_famille_edit', {'id': famille.id}) }}">Modifier</a>
+    {% if is_granted('headFamily', famille) %}
+        <a href="{{ path('app_famille_edit', {'id': famille.id}) }}">Modifier</a>
+    {% endif %}
 {% endblock %}

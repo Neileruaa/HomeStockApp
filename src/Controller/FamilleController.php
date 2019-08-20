@@ -75,6 +75,8 @@ class FamilleController extends AbstractController
      */
     public function edit(Request $request, Famille $famille): Response
     {
+        $this->denyAccessUnlessGranted('headFamily', $famille);
+
         $form = $this->createForm(FamilleType::class, $famille);
         $form->handleRequest($request);
 
