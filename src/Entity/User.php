@@ -85,6 +85,16 @@ class User implements UserInterface
      */
     private $ownedFamille;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Invitation", mappedBy="receiver", orphanRemoval=true)
+     */
+    private $invitations;
+
+    public function __construct()
+    {
+        $this->invitations = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -262,6 +272,37 @@ class User implements UserInterface
     public function setOwnedFamille($ownedFamille): void
     {
         $this->ownedFamille = $ownedFamille;
+    }
+
+    /**
+     * @return Collection|Invitation[]
+     */
+    public function getInvitations(): Collection
+    {
+        return $this->invitations;
+    }
+
+    public function addInvitation(Invitation $invitation): self
+    {
+        if (!$this->invitations->contains($invitation)) {
+            $this->invitations[] = $invitation;
+            $invitation->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInvitation(Invitation $invitation): self
+    {
+        if ($this->invitations->contains($invitation)) {
+            $this->invitations->removeElement($invitation);
+            // set the owning side to null (unless already changed)
+            if ($invitation->getAuthor() === $this) {
+                $invitation->setAuthor(null);
+            }
+        }
+
+        return $this;
     }
 
 }
