@@ -26,7 +26,6 @@ class FamilleController extends AbstractController
     public function index(FamilleRepository $familleRepository)
     {
         $familles = $familleRepository->findAll();
-        dump($familles);
         return $this->render('famille/index.html.twig', [
             'familles' => $familles
         ]);
@@ -105,6 +104,18 @@ class FamilleController extends AbstractController
             $user->setFamille(null);
         }
         $em->remove($famille);
+        $em->flush();
+        return $this->redirectToRoute('app_famille_show');
+    }
+
+    /**
+     * @Route("/{id}/leave")
+     * @Security("is_granted('canLeave', famille)")
+     */
+    public function leave(Famille $famille, EntityManagerInterface $em)
+    {
+        $famille->removeUser($this->getUser());
+        $em->persist($famille);
         $em->flush();
         return $this->redirectToRoute('app_famille_show');
     }

@@ -13,6 +13,7 @@ class FamilleVoter extends Voter
 {
 
     const HEAD_FAMILY = 'headFamily';
+    const LEAVE = 'canLeave';
 
     /**
      * Determines if the attribute and subject are supported by this voter.
@@ -24,7 +25,7 @@ class FamilleVoter extends Voter
      */
     protected function supports($attribute, $subject)
     {
-        if (!in_array($attribute, [self::HEAD_FAMILY])){
+        if (!in_array($attribute, [self::HEAD_FAMILY, self::LEAVE])){
             return false;
         }
 
@@ -59,6 +60,8 @@ class FamilleVoter extends Voter
         switch ($attribute) {
             case self::HEAD_FAMILY:
                 return $this->canUsePowerOfHeadFamily($famille, $user);
+            case self::LEAVE:
+                return $this->canLeave($famille, $user);
         }
 
         throw new \LogicException('Tu ne devrais pas lire ca mon bro');
@@ -67,5 +70,10 @@ class FamilleVoter extends Voter
     private function canUsePowerOfHeadFamily(Famille $famille, User $user)
     {
         return $user === $famille->getHeadFamily();
+    }
+
+    private function canLeave(Famille $famille, User $user)
+    {
+        return $user !== $famille->getHeadFamily();
     }
 }

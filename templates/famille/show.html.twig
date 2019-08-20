@@ -20,6 +20,12 @@
                 <a href="#" class="btn btn-info"><i class="fas fa-tasks"></i></a>
             </div>
         </div>
+    {% elseif is_granted('canLeave', famille) %}
+        <div class="row m-3">
+            <div class="col-3 text-center">
+                <a href="{{ path('app_famille_leave', {'id': famille.id}) }}" class="btn btn-danger"><i class="fas fa-door-closed"></i></a>
+            </div>
+        </div>
     {% endif %}
 
     <table class="table">
