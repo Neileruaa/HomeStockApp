@@ -14,7 +14,7 @@
 		</thead>
 		<tbody>
 			{% for famille in familles %}
-				<tr {% if famille.id == app.user.famille.id %}class="table-active"{% endif %}>
+				<tr {% if app.user.famille and famille.id == app.user.famille.id %}class="table-active"{% endif %}>
 					<th scope="row">{{ famille.name }}</th>
 					<td>{{ famille.users|length }}</td>
 					<td>{{ famille.ville }}</td>
