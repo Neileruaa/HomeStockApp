@@ -14,7 +14,7 @@
                 <a href="{{ path('app_famille_delete', {'id': famille.id}) }}" class="btn btn-danger"><i class="fas fa-eraser"></i></a>
             </div>
             <div class="col-3 text-center">
-                <a href="#" class="btn btn-success"><i class="fas fa-user-plus"></i></a>
+                <a href="{{ path('app_invitation_new', {'id': famille.id}) }}" class="btn btn-success"><i class="fas fa-user-plus"></i></a>
             </div>
             <div class="col-3 text-center">
                 <a href="#" class="btn btn-info"><i class="fas fa-tasks"></i></a>
@@ -54,7 +54,4 @@
             </tr>
         </tbody>
     </table>
-    {% if is_granted('headFamily', famille) %}
-
-    {% endif %}
 {% endblock %}

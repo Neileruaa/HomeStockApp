@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Famille;
 use App\Form\FamilleType;
 use App\Repository\FamilleRepository;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
