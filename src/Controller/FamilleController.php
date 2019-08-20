@@ -41,7 +41,7 @@ class FamilleController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
         	$famille->addUser($this->getUser());
-
+            $famille->setHeadFamily($this->getUser());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($famille);
             $entityManager->flush();

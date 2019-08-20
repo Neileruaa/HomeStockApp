@@ -63,6 +63,11 @@ class Famille
      */
     private $pays;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="familles")
+     */
+    private $headFamily;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -256,6 +261,18 @@ class Famille
     public function setPays(string $pays): self
     {
         $this->pays = $pays;
+
+        return $this;
+    }
+
+    public function getHeadFamily(): ?User
+    {
+        return $this->headFamily;
+    }
+
+    public function setHeadFamily(?User $headFamily): self
+    {
+        $this->headFamily = $headFamily;
 
         return $this;
     }

@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -77,6 +79,16 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      */
     private $pays;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Famille", mappedBy="headFamily")
+     */
+    private $familles;
+
+    public function __construct()
+    {
+        $this->familles = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -236,6 +248,37 @@ class User implements UserInterface
     public function setPays(string $pays): self
     {
         $this->pays = $pays;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Famille[]
+     */
+    public function getFamilles(): Collection
+    {
+        return $this->familles;
+    }
+
+    public function addFamille(Famille $famille): self
+    {
+        if (!$this->familles->contains($famille)) {
+            $this->familles[] = $famille;
+            $famille->setHeadFamily($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFamille(Famille $famille): self
+    {
+        if ($this->familles->contains($famille)) {
+            $this->familles->removeElement($famille);
+            // set the owning side to null (unless already changed)
+            if ($famille->getHeadFamily() === $this) {
+                $famille->setHeadFamily(null);
+            }
+        }
 
         return $this;
     }
