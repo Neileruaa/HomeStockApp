@@ -3,10 +3,31 @@
 {% block title %}Accueil{% endblock %}
 
 {% block body %}
-    <h1>Homepage</h1>
-    <a href="{{ path('app_product_scanner') }}" class="btn btn-primary">Scanner un produit</a>
-    <form action="{{ path('app_home_findbarcode') }}" method="get">
-        <input type="text" id="codebar" name="codebar" placeholder="Votre code bar" required>
-        <input type="submit" value="Chercher" class="btn btn-success">
-    </form>
+    <div class="jumbotron mt-1 mb-1">
+        <h1>Application de gestion des stocks</h1>
+    </div>
+    <div class="card-deck">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Scanner un produit</h5>
+                <p class="card-text">Trouver votre produit en le scannant ! Les EAN 8 et 13 seront alors automatiquement reconnus</p>
+                <a href="{{ path('app_product_scanner') }}" class="btn btn-primary">Scanner</a>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Chercher un produit</h5>
+                <p class="card-text">Trouver directement votre produit grâce à son code-barres.</p>
+                <form action="{{ path('app_home_findbarcode') }}" method="get" class="form-inline">
+                    <div class="input-group mb-2 mr-sm-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text text-secondary"><i class="fas fa-barcode"></i></div>
+                        </div>
+                        <input type="text" id="codebar" name="codebar" placeholder="Votre code bar" class="form-control" required>
+                    </div>
+                    <input type="submit" value="Chercher" class="btn btn-secondary mb-2">
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock %}
