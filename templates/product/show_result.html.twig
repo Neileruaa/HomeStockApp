@@ -29,8 +29,8 @@
 
             <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                 <div class="card-body">
-                    {% if nameProduct %} {{ nameProduct }} {% endif %}
-                    {% if pathImage %} <img src="{{ pathImage }}" alt="">{% endif %}
+                    {% if nameProduct %} <h2>{{ nameProduct }}</h2> {% endif %}
+                    {% if pathImage %} <img src="{{ pathImage }}" alt="image produit" class="img-thumbnail">{% endif %}
                 </div>
             </div>
         </div>
