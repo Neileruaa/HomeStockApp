@@ -27,6 +27,8 @@ class ProductController extends AbstractController
      */
     public function scanner()
     {
+        $this->denyAccessUnlessGranted('addProduct', $this->getUser(), 'Il vous faut appartenir à une famille');
+
         return $this->render('product/scanner.html.twig', []);
     }
 
@@ -35,6 +37,8 @@ class ProductController extends AbstractController
      */
     public function productsOfFamille(ProduitFamilleRepository $produitFamilleRepository)
     {
+        $this->denyAccessUnlessGranted('addProduct', $this->getUser(), 'Il vous faut appartenir à une famille');
+
         $produitFamilles = $produitFamilleRepository->findBy(['famille' => $this->getUser()->getFamille()]);
 
         return $this->showProducts($produitFamilles);
