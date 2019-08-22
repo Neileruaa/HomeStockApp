@@ -4,10 +4,18 @@
 
 {% block body %}
     <h1>Résultat</h1>
-    <form action="{{ path('app_home_findbarcode') }}" method="get">
-        <input type="number" id="codebar" name="codebar" placeholder="Votre code bar" value="{{ codebar }}">
-        <input type="submit" value="Chercher" class="btn btn-success">
-        <a href="{{ path('app_product_scanner') }}" class="btn btn-danger"><i class="fas fa-barcode"></i> Scanner à nouveau</a>
+    <form action="{{ path('app_home_findbarcode') }}" method="get" class="form-inline">
+        <div class="input-group mb-2 mr-sm-2">
+            <div class="input-group-prepend">
+                <div class="input-group-text text-secondary"><i class="fas fa-barcode"></i></div>
+            </div>
+            <input type="text" id="codebar" name="codebar" value="{{ codebar }}" class="form-control" required>
+        </div>
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <input type="submit" value="Chercher" class="btn btn-outline-primary mb-2">
+            <a href="{{ path('app_product_scanner') }}" class="btn btn-outline-secondary mb-2">Scanner</a>
+        </div>
+
     </form>
     <div class="accordion mb-4 mt-4" id="accordionExample">
         <div class="card">
