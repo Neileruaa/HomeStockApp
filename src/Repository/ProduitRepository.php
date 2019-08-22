@@ -19,4 +19,18 @@ class ProduitRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Produit::class);
     }
+
+    public function findProductInFamille($codebar, ?Famille $famille)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.ean = :ean')
+            ->setParameter('ean', $codebar)
+            ->join('p.produitFamilles', 'produitFamilles')
+            ->join('produitFamilles.famille', 'famille')
+            ->andWhere('famille = :famille')
+            ->setParameter('famille', $famille)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
 }

@@ -32,7 +32,9 @@ class HomeController extends AbstractController
 
 		$needToSetQuantity = false;
 
-		if ($produit = $produitRepository->findOneBy(['ean' => $codebar])){
+		$this->denyAccessUnlessGranted('addProduct', $this->getUser(), 'Il vous faut appartenir à une famille');
+
+		if ($produit = $produitRepository->findProductInFamille($codebar, $this->getUser()->getFamille())){
 			$needToSetQuantity = true;
 		}
 		$nameProduct = $barcodeManager->getNameOfProduct($codebar);
