@@ -54,7 +54,7 @@ class ProductController extends AbstractController
         EntityManagerInterface $em
     ) {
         $codebar = $request->get('hiddenCodeBar');
-        $produit = $produitRepository->findOneBy(['ean' => $codebar]);
+        $produit = $produitRepository->findProductInFamille($codebar, $this->getUser()->getFamille());
         $quantity = $request->get('quantityProduct');
         if (!($productFamille = $produitFamilleRepository->findOneBy(['famille' => $this->getUser()->getFamille(), 'produit' => $produit]))){
             $productFamille = new ProduitFamille();

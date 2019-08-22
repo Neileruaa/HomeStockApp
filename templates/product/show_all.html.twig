@@ -10,7 +10,7 @@
 {% block body %}
 	<h1>Vos produits en stock</h1>
 	{{ render(controller('App\\Controller\\ProductController::searchBar')) }}
-	<a href="{{ path('app_product_productsoffamille') }}" class="btn btn-warning">Tout afficher</a>
+	<a href="{{ path('app_product_productsoffamille') }}" class="btn btn-outline-secondary">Tout afficher</a>
 	<table class="table">
 		<thead>
 			<tr>

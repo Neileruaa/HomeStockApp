@@ -16,7 +16,6 @@ class ProductType extends AbstractType
         $product = $options['data'];
         $builder
             ->add('name')
-            ->add('image')
             ->add('ean')
             ->add('pays', CountryType::class, [
                 'data' => $product->getPays()
